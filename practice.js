@@ -163,13 +163,18 @@ var applyCoupon = function (groceries, coupon) {
 
 // return the total price of all products.
 var sumTotal = function (products) {
-
+  return _.reduce(products, function(total, product) {
+    return total += Number(product.price.replace('$', ''));
+  }, 0);
 };
 
 // return an object consisting of dessert types and how many of each.
 // exampleOutput: { dessertType: 3, dessertType2: 1 }
 var dessertCategories = function (desserts) {
-
+  return _.reduce(desserts, function(total, dessert) {
+    return total[dessert.type] = (total[dessert.type] !== undefined ? total[dessert.type] + 1 : 1),
+    total;
+  }, {});
 };
 
 // return an object with the proper count of all user messages
@@ -184,19 +189,32 @@ var dessertCategories = function (desserts) {
   }
 */
 var countMessagesPerUser = function(tweets) {
-
+  return _.reduce(tweets, function(total, tweet) {
+    return total[tweet.user] = (total[tweet.user] !== undefined ? total[tweet.user] + 1 : 1),
+    total;
+  }, {});
 };
 
 // given an array of movie data objects,return an array containing
 // movies that came out between 1990 and 2000.
 // TIP: use an array as your accumulator - don't push to an external array!
 var ninetiesKid = function (movies) {
-
+  return _.reduce(movies, function(total, movie) {
+    if (movie.releaseYear <= 2000 && movie.releaseYear >= 1990) {
+      total.push(movie.title);
+    }
+    return total;
+  }, []);
 };
 
 // return an boolean stating if there exists a movie with a shorter
 // runtime than your time limit.
 // timeLimit is an integer representing a number of minutes.
 var movieNight = function (movies, timeLimit) {
-
+  return _.reduce(movies, function(total, movie) {
+    if (movie.runtime < timeLimit) {
+      return total = true;
+    }
+    return total;
+  }, false);
 };
