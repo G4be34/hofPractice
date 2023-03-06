@@ -97,20 +97,32 @@ var filterUserTweets = function(tweets, user) {
 // given an array of strings, use _.map to return a new array containing all
 // strings converted to uppercase letters.
 var upperCaseFruits = function (fruits) {
-
+  return _.map(fruits, function(fruit) {
+    return fruit.toUpperCase();
+  });
 };
 
 // given an array of dessert objects, return a new array of objects
 // that have a new "glutenFree" property, with a boolean value.
 // TIP: Items that contain flour are not gluten-free.
 var glutenFree = function (desserts) {
-
+  return _.map(desserts, function(dessert) {
+    dessert.glutenFree = true;
+    _.map(dessert.ingredients, function(ingredient) {
+      if (ingredient === 'flour') {
+        dessert.glutenFree = false;
+      }
+    });
+    return dessert;
+  });
 };
 
 // given an array of tweet objects, return a new array of strings
 // containing only the message properties.
 var allUserMessages = function(tweets) {
-
+  return _.map(tweets, function(tweet) {
+    return tweet.message;
+  });
 };
 
 // use _.map to return an array of items with their sale prices, with a new property
@@ -134,6 +146,12 @@ var allUserMessages = function(tweets) {
 
 */
 var applyCoupon = function (groceries, coupon) {
+  var results = _.map(groceries, function(item) {
+    item.salePrice = '$' + (Math.round((Number(item.price.replace('$', ''))
+    * (1 - coupon)) * 100) / 100);
+    return item;
+  });
+  return results;
 
 };
 
